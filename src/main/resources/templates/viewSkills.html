@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Skills</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+ 
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa; /* Light gray background */
+        }
+ 
+        h2, table, .success-message, .create-link {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+ 
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff; /* Bootstrap primary color */
+        }
+ 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff; /* White background */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle lift */
+        }
+ 
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6; /* Bootstrap table border color */
+        }
+ 
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+ 
+        tr:nth-child(even) {
+            background-color: #f8f9fa; /* Light gray for even rows */
+        }
+ 
+        form {
+            margin-top: 20px;
+        }
+ 
+        button {
+            padding: 10px 20px;
+            background-color: #dc3545; /* Bootstrap danger color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+ 
+        button:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+ 
+        .success-message {
+            color: #28a745; /* Bootstrap success color */
+            margin-top: 10px;
+            font-weight: bold;
+        }
+ 
+        .create-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+ 
+        .create-link {
+            flex: 0 0 calc(33.33% - 10px);
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Added color transition */
+            font-weight: bold;
+        }
+ 
+        .create-link:hover {
+            background-color: #0056b3;
+            color: #fff; /* Ensures the text is visible on hover */
+        }
+ 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+ 
+    <script>
+        function confirmDelete() {
+            var confirmation = confirm("Delete Skills Carefully. The associated data for employees will also be affected. Are you sure?");
+            return confirmation;
+        }
+    </script>
+</head>
+<body>
+    <h2>View Skills</h2>
+ 
+    <form id="deleteForm" th:action="@{/deleteSkills}" method="post" onsubmit="return confirmDelete()">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Skill ID</th>
+                    <th>Skill Name</th>
+                    <th>Subdomain</th>
+                    <th>Domain</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="skill : ${skills}">
+                    <td><input type="checkbox" th:value="${skill.skillid}" name="skillsToDelete"></td>
+                    <td><span th:text="${skill.skillid}"></span></td>
+                    <td><span th:text="${skill.skillname}"></span></td>
+                    <td><span th:text="${skill.subdomain}"></span></td>
+                    <td><span th:text="${skill.domain}"></span></td>
+                </tr>
+            </tbody>
+        </table>
+ 
+        <button type="submit">Delete Selected</button>
+    </form>
+ 
+    <div th:if="${param.deleted}" class="success-message">
+        <p>Delete successful! The associated data for employees has been affected.</p>
+    </div>
+ 
+    <div class="create-links">
+        <a th:href="@{/createDomainPage}" class="create-link">Create Domain</a>
+        <a th:href="@{/createSubdomainPage}" class="create-link">Create Subdomain</a>
+        <a th:href="@{/createSkillPage}" class="create-link">Create Skill</a>
+    </div>
+ 
+    <!-- Include jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+         <script>
+        function confirmDelete() {
+            var checkboxes = document.getElementsByName('skillsToDelete');
+            var checked = false;
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    checked = true;
+                    break;
+                }
+            }
+            if (!checked) {
+                alert("Please select at least one skill to delete.");
+                return false; // Prevent form submission
+            }
+            return confirm("Deleting skills will also affect associated employee data. Are you sure you want to delete?");
+        }
+    </script>
+</body>
+</html>
+ 

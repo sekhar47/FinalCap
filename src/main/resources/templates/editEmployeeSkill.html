@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Employee Skill</title>
+</head>
+<body>
+ 
+<h2>Edit Employee Skill</h2>
+ 
+<form action="/saveChanges" method="post">
+    <input type="hidden" name="id.empid" th:value="${employeeSkill.id.empid}" readonly>
+    <input type="hidden" name="id.skillid" th:value="${employeeSkill.id.skillid}" readonly>
+    
+    <label for="proficiency">Proficiency:</label>
+    <select id="proficiency" name="proficiency">
+        <option value="Awareness" th:selected="${employeeSkill.proficiency == 'Awareness'}">Awareness</option>
+        <option value="Novice" th:selected="${employeeSkill.proficiency == 'Novice'}">Novice</option>
+        <option value="Proficiency" th:selected="${employeeSkill.proficiency == 'Proficiency'}">Professional</option>
+        <option value="Expert" th:selected="${employeeSkill.proficiency == 'Expert'}">Expert</option>
+    </select>
+    <br>
+    
+    <label for="exp">Experience:</label>
+    <input type="text" id="trainingdays" name="trainingdays" th:value="${employeeSkill.trainingdays}">
+    <br>
+    
+    <label for="cert_source">Cert Source:</label>
+    <input type="text" id="certificationname" name="certificationname" th:value="${employeeSkill.certificationname}">
+    <br>
+    
+    <button type="submit">Save Changes</button>
+</form>
+ 
+</body>
+</html>

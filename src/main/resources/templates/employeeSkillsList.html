@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Skills List</title>
+</head>
+<body>
+ 
+<h2>Employee Skills List</h2>
+ 
+<table border="1">
+    <tr>
+        <th>Emp ID</th>
+        <th>Emp Name</th>
+       
+        <th>Skill Name</th>
+        <th>Proficiency</th>
+        <th>Experience</th>
+        <th>Cert Source</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="employeeSkill : ${employeeSkills}">
+        <td th:text="${employeeSkill.id.empid}"></td>
+        <td th:text="${employeeSkill.user.name}"></td>
+       
+         <td th:text="${employeeSkill.skills.skillname}"></td>
+        <td th:text="${employeeSkill.proficiency}"></td>
+        <td th:text="${employeeSkill.trainingdays}"></td>
+        <td th:text="${employeeSkill.certificationname}"></td>
+        <td>
+            <form action="/editEmployeeskill" method="post">
+                <input type="hidden" name="empid" th:value="${employeeSkill.id.empid}">
+                <input type="hidden" name="skillid" th:value="${employeeSkill.id.skillid}">
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+    </tr>
+</table>
+ 
+</body>
+</html>
+ 
